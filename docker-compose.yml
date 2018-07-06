@@ -1,12 +1,16 @@
 version: '2'
 services:
   db:
+    container_name: "database"
     image: postgres:9.5
     environment:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
-
+      - PGDATA=/var/lib/postgresql/data
+    #volumes:
+    #  - ./app/db:/var/lib/postgresql/data
   odoo11:
+    container_name: "web"
     image: odoo:11.0
     depends_on:
       - db
@@ -15,8 +19,5 @@ services:
     tty: true
     command: -- --dev=reload
     volumes:
-      - ./o_addons:/mnt/extra-addons
-      - ./o_etc:/etc/odoo
-volumes:
-  db:
-  odoo11:
+      - ./app/addons:/var/lib/odoo
+      - ./app/config:/etc/odoo
