@@ -1,23 +1,27 @@
 version: '2'
 services:
   db:
-    container_name: "database"
-    image: postgres:9.5
-    environment:
-      - POSTGRES_PASSWORD=odoo
-      - POSTGRES_USER=odoo
-      - PGDATA=/var/lib/postgresql/data
-    #volumes:
-    #  - ./app/db:/var/lib/postgresql/data
+      container_name: "odoo11_database"
+      image: postgres:9.5
+      ports:
+          - "8069:8069"
+      environment:
+          - POSTGRES_USER=tinhnguyen
+          - POSTGRES_PASSWORD=0909977920
+          - PGDATA=/var/lib/postgresql/data
+      volumes:
+          - ./app/db:/var/lib/postgresql/data
+
   odoo11:
-    container_name: "web"
-    image: odoo:11.0
-    depends_on:
-      - db
-    ports:
-      - "8069:8069"
-    tty: true
-    command: -- --dev=reload
-    volumes:
-      - ./app/addons:/var/lib/odoo
-      - ./app/config:/etc/odoo
+      container_name: "odoo11_web"
+      image: odoo:11.0
+      depends_on:
+          - db
+      ports:
+          - "8069:8069"
+      tty: true
+      command: -- --dev=reload
+      volumes:
+          - ./app/data:/var/lib/odoo
+          - ./app/myaddons:/mnt/extra-addons
+          - ./app/config/odoo.conf:/etc/odoo/odoo.conf
