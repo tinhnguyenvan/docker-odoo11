@@ -37,7 +37,7 @@ Features:
 **Table of contents**
 
 .. contents::
-   :local:
+    :local:
 
 Usage
 =====
@@ -100,7 +100,7 @@ Maintainers
 This module is maintained by the OCA.
 
 .. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
+    :alt: Odoo Community Association
    :target: https://odoo-community.org
 
 OCA, or the Odoo Community Association, is a nonprofit organization whose

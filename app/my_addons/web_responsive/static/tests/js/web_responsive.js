@@ -2,33 +2,33 @@
 /* Copyright 2016 LasLabs Inc.
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-odoo.define('web_responsive.test', function(require) {
+odoo.define('web_responsive.test', function (require) {
     "use strict";
 
     var core = require('web.core');
     var responsive = require('web_responsive');
 
     QUnit.module('web_responsive', {
-        beforeEach: function() {
+        beforeEach: function () {
             var $el = $(
                 '<div class="drawer drawer--left">' +
-                    '<header role="banner">' +
-                        '<button class="drawer-toggle">' +
-                            '<span class="drawer-hamburger-icon"/>' +
-                        '</button>' +
-                        '<nav class="drawer-nav">' +
-                            '<ul class="drawer-menu">' +
-                                '<li class="drawer-menu-item"/>' +
-                            '</ul>' +
-                        '</nav>' +
-                        '<div class="panel-title" id="appDrawerAppPanelHead"></div>' +
-                    '</header>' +
-                    '<main role="main"></main>' +
-                    '<a class="oe_menu_leaf"/>' +
-                    '<div>' +
-                        '<div class="o_sub_menu_content"></div>' +
-                    '</div>' +
-                    '<div class="dropdown-scrollable"></div>' +
+                '<header role="banner">' +
+                '<button class="drawer-toggle">' +
+                '<span class="drawer-hamburger-icon"/>' +
+                '</button>' +
+                '<nav class="drawer-nav">' +
+                '<ul class="drawer-menu">' +
+                '<li class="drawer-menu-item"/>' +
+                '</ul>' +
+                '</nav>' +
+                '<div class="panel-title" id="appDrawerAppPanelHead"></div>' +
+                '</header>' +
+                '<main role="main"></main>' +
+                '<a class="oe_menu_leaf"/>' +
+                '<div>' +
+                '<div class="o_sub_menu_content"></div>' +
+                '</div>' +
+                '<div class="dropdown-scrollable"></div>' +
                 '</div>'
             );
 
@@ -42,13 +42,13 @@ odoo.define('web_responsive.test', function(require) {
             this.drawer = new responsive.AppDrawer();
         },
 
-        linkGrid: function() {
-            for(var i = 0; i < 3; i++){
+        linkGrid: function () {
+            for (var i = 0; i < 3; i++) {
                 this.drawer.$el.append(
                     $('<div class="row">').append(
                         $('<a class="col-md-6" id="a_' + i + '"><span class="app-drawer-icon-app /></a>' +
-                          '<a class="col-md-6" id="b_' + i + '"><span class="app-drawer-icon-app /></a>'
-                          )
+                            '<a class="col-md-6" id="b_' + i + '"><span class="app-drawer-icon-app /></a>'
+                        )
                     )
                 );
                 this.drawer.$appLinks = this.drawer.$el.find('a.col-md-6');
@@ -57,7 +57,7 @@ odoo.define('web_responsive.test', function(require) {
     });
 
     QUnit.test('It should set initialized after success init',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             assert.ok(this.drawer.initialized);
@@ -65,14 +65,14 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should close drawer after click on clickZone',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.$clickZone.click();
 
             var self = this;
             var d = $.Deferred();
-            setTimeout(function() {
+            setTimeout(function () {
                 assert.ok(self.drawer.$el.hasClass('drawer-close'));
                 d.resolve();
             }, 100);
@@ -82,14 +82,14 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should collapse open secondary menus during handleClickZones',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.$clickZone.click();
 
             var self = this;
             var d = $.Deferred();
-            setTimeout(function() {
+            setTimeout(function () {
                 assert.equal(self.$secondaryMenu.attr('aria-expanded'), 'false');
                 d.resolve();
             }, 200);
@@ -99,7 +99,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should update max-height on scrollable dropdowns',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.handleWindowResize();
@@ -119,7 +119,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should return keybuffer + new key',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.keyBuffer = 'TES';
@@ -129,7 +129,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should clear keybuffer after timeout',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.keyBuffer = 'TES';
@@ -138,7 +138,7 @@ odoo.define('web_responsive.test', function(require) {
 
             var self = this;
             var d = $.Deferred();
-            setTimeout(function() {
+            setTimeout(function () {
                 assert.equal(self.drawer.keyBuffer, "");
                 d.resolve();
             }, 100);
@@ -148,12 +148,12 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should trigger core bus event for drawer close',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.onDrawerOpen();
             var d = $.Deferred();
-            core.bus.on('drawer.closed', this, function() {
+            core.bus.on('drawer.closed', this, function () {
                 assert.ok(true);
                 d.resolve();
             });
@@ -164,14 +164,14 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should set isOpen to false when closing',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.onDrawerOpen();
 
             var self = this;
             var d = $.Deferred();
-            setTimeout(function() {
+            setTimeout(function () {
                 assert.equal(self.drawer.isOpen, false);
                 d.resolve();
             }, 100);
@@ -183,14 +183,14 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should set isOpen to true when opening',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.$el.trigger({type: 'drawer.opened'});
 
             var self = this;
             var d = $.Deferred();
-            setTimeout(function() {
+            setTimeout(function () {
                 assert.ok(self.drawer.isOpen);
                 d.resolve();
             }, 100);
@@ -200,13 +200,13 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should trigger core bus event for drawer open',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.drawer.onDrawerOpen();
             var d = $.Deferred();
 
-            core.bus.on('drawer.opened', this, function() {
+            core.bus.on('drawer.opened', this, function () {
                 assert.ok(true);
                 d.resolve();
             });
@@ -217,7 +217,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose link to right',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -233,7 +233,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose link to left',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -247,7 +247,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose link above',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -261,7 +261,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose link below',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -275,7 +275,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose first link if next on last',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -289,7 +289,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose bottom link if up on top',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
@@ -303,7 +303,7 @@ odoo.define('web_responsive.test', function(require) {
     );
 
     QUnit.test('It should choose top link if down on bottom',
-        function(assert) {
+        function (assert) {
             assert.expect(1);
 
             this.linkGrid();
