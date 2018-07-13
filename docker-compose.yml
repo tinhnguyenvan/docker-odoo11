@@ -3,14 +3,12 @@ services:
   db:
       container_name: "odoo11_database"
       image: postgres:9.5
-      ports:
-          - "8069:8069"
       environment:
           - POSTGRES_USER=tinhnguyen
           - POSTGRES_PASSWORD=0909977920
-          - PGDATA=/var/lib/postgresql/data
+          - PGDATA=/var/lib/postgresql/data/pgdata
       volumes:
-          - ./app/db:/var/lib/postgresql/data
+          - ./app/db:/var/lib/postgresql/data/pgdata
 
   odoo11:
       container_name: "odoo11_web"
