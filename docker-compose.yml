@@ -20,6 +20,6 @@ services:
       tty: true
       command: -- --dev=reload
       volumes:
-          - ./app/data:/var/lib/odoo
-          - ./app/myaddons:/mnt/extra-addons
+          - ./app/web:/var/lib/odoo
+          - ./app/my_addons:/mnt/extra-addons
           - ./app/config/odoo.conf:/etc/odoo/odoo.conf
